@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="50dp" 
+    android:layout_centerInParent="true" >
+    
+    
+   
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="This Controller&apos;s IP Address: " >
+            </TextView>
+
+            <EditText
+                android:id="@+id/txtTabletIP"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:layout_marginBottom="20dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:text="IP Address of Doubot:  " >
+            </TextView>
+
+            <EditText
+                android:id="@+id/txtPhoneIP"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="" 
+                android:layout_marginBottom="20dp" />
+
+            <ToggleButton
+                android:id="@+id/btnStart"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textOff="START"
+                android:textOn="START" >
+            </ToggleButton>
+
+        
+        
+        
+
+</LinearLayout>

@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+	
+	<RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" 
+	    android:layout_weight="1" >
+	
+	    
+	    <garylimyy.controller.VerticalSeekBar
+	        android:id="@+id/leftSeekBar"
+	        android:layout_width="wrap_content"
+	        android:layout_height="200dp"
+	        android:layout_centerVertical="true"
+			android:layout_alignParentLeft="true"
+	        android:max="1000"
+	        android:progress="500" />
+	    
+	    
+	    <ImageView
+	        android:id="@+id/imageview"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        
+	        android:layout_centerInParent="true"
+	        android:gravity="center_horizontal" />
+	    
+	    
+	    <garylimyy.controller.VerticalSeekBar
+	        android:id="@+id/rightSeekBar"
+	        android:layout_width="wrap_content"
+	        android:layout_height="200dp"
+	        android:layout_centerVertical="true"
+	        android:layout_alignParentRight="true"
+	        android:max="1000"
+	        android:progress="500" />
+	    
+	</RelativeLayout>    
+	
+	<RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" 
+	    android:layout_weight="5" >
+	
+	
+	    <SeekBar
+	        android:id="@+id/armSeekBar"
+	        android:layout_width="200dp"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_alignParentBottom="true"
+	        android:max="1000"
+	        android:progress="500" />
+	
+	
+	</RelativeLayout>
+	
+</LinearLayout>

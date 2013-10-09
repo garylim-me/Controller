@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    
+    
+    
+        <LinearLayout
+            android:layout_width="400px"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5px" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Acceleration: " >
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtacc1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " >
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtacc2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " >
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtacc3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " >
+            </TextView>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Orientation: " >
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtdis1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " >
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtdis2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " >
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtdis3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " >
+            </TextView>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="GPS: " >
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtgps1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " >
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtgps2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" " >
+            </TextView>
+        </LinearLayout>
+        
+        
+        
+        
+        
+
+</LinearLayout>
