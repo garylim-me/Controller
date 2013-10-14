@@ -1,7 +1,12 @@
 package garylimyy.controller;
 
+import java.net.DatagramSocket;
+import java.net.SocketException;
+
 import garylimyy.threads.camera_thread_UDP;
+import garylimyy.threads.ioio_thread_UDP;
 import garylimyy.threads.sensors_thread_UDP;
+import garylimyy.controller.ConnectionFragment;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -20,6 +25,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -33,6 +40,12 @@ public class MainActivity extends Activity {
 	//Threads:
 	sensors_thread_UDP sensors_thread;
 	camera_thread_UDP camera_thread; 
+	
+	//Fragments:
+	public static Fragment ConnectionFragment;
+	public static Fragment ControllerFragment;
+	public static Fragment MapViewFragment;
+	public static Fragment SettingsFragment;
 	
 	//Network:
 	public static int IOIO_PORT = 9001; //sending port for doubot
@@ -152,43 +165,54 @@ public class MainActivity extends Activity {
     	Fragment fragment;
     	
     	switch (position) {
-    	case 0: {	
-    		
-    		WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
-    		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-    		int ipAddress = wifiInfo.getIpAddress();
-    		actualIpAddress = IP_Int_to_String(ipAddress);
-    		
-        	fragment = new ConnectionFragment();
-        	Bundle args = new Bundle();
-        	args.putString("actualIpAddress", actualIpAddress);
-        	fragment.setArguments(args);
-    		
-        	break;
-    	}
-       	
-    	case 1: {
-        	fragment = new ControllerFragment();
-    		
-            break;
-        	}   
-    	
-    	case 2: {
-        	fragment = new MapViewFragment();
-    		
-            break;
-        	}
-    	
-    	case 3: {
-        	fragment = new SettingsFragment();
-    		
-            break;
-        	}
-    	
-    	default: {
-    		fragment = new ControllerFragment();
-        	
-    		}
+	    	case 0: {	
+	    		if (ConnectionFragment == null){
+	    			
+		    		WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+		    		WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+		    		int ipAddress = wifiInfo.getIpAddress();
+		    		actualIpAddress = IP_Int_to_String(ipAddress);
+		    		
+		        	Bundle args = new Bundle();
+		        	args.putString("actualIpAddress", actualIpAddress);
+		        	ConnectionFragment = new ConnectionFragment();
+		        	ConnectionFragment.setArguments(args); 
+	        	}
+
+	    		fragment = ConnectionFragment;
+	        	break;
+	    	}
+	       	
+	    	case 1: {
+	        	if (ControllerFragment == null){
+	        		ControllerFragment = new ControllerFragment();
+	        	}
+	    		fragment = ControllerFragment;
+	            break;
+	        }   
+	    	
+	    	case 2: {
+	        	if (MapViewFragment == null){
+	        		MapViewFragment = new MapViewFragment();
+	        	}
+	    		fragment = MapViewFragment;
+	            break;
+	        }
+	    	
+	    	case 3: {
+	        	if (SettingsFragment == null){
+	        		SettingsFragment = new SettingsFragment();
+	        	}
+	    		fragment = SettingsFragment;
+	            break;
+	        }
+	    	
+	    	default: {
+	    		if (ControllerFragment == null){
+	        		ControllerFragment = new ControllerFragment();
+	        	}
+	    		fragment = ControllerFragment;
+	    	}
         	
     	}
     	    
@@ -227,50 +251,9 @@ public class MainActivity extends Activity {
     }
     
     
-    /**
-     * Fragment that appears in the "content_frame", shows the status (maybe map)
-     */
-//    public static class StatusFragment extends Fragment {
-//
-//        public StatusFragment() {
-//            // Empty constructor required for fragment subclasses
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_status, container, false);
-//            
-//            
-//            getActivity().setTitle("Status");
-//            return rootView;
-//        }
-//    }
-    
-    /**
-     * Fragment that appears in the "content_frame", shows the settings to tweak variables
-     */
-//    public static class SettingsFragment extends Fragment {
-//
-//        public SettingsFragment() {
-//            // Empty constructor required for fragment subclasses
-//        }
-//
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
-//            
-//            
-//            getActivity().setTitle("Settings");
-//            return rootView;
-//        }
-//    }
-    
     
 		public static String IP_Int_to_String (int ipAddress){
 			
-
 			String ipBinary = Integer.toBinaryString(ipAddress);
 
 			//Leading zeroes are removed by toBinaryString, this will add them back.
@@ -286,6 +269,11 @@ public class MainActivity extends Activity {
 
 			//Convert to numbers
 			return Integer.parseInt(d,2)+"."+Integer.parseInt(c,2)+"."+Integer.parseInt(b,2)+"."+Integer.parseInt(a,2);
+		}
+		
+
+	    public void onToggleClicked(View view) {
+	    	((garylimyy.controller.ConnectionFragment) ConnectionFragment).onToggleClicked(view);
 		}
 		
 }

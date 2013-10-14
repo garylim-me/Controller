@@ -20,9 +20,9 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 public class ConnectionFragment extends Fragment {
 
 	//Threads
-	ioio_thread_UDP ioio_thread;
-	sensors_thread_UDP sensors_thread;
-	camera_thread_UDP camera_thread;
+	public static ioio_thread_UDP ioio_thread;
+//	sensors_thread_UDP sensors_thread;
+	public static camera_thread_UDP camera_thread;
 	
 	private EditText txtTabletIP;
 	private EditText txtPhoneIP;
@@ -46,51 +46,15 @@ public class ConnectionFragment extends Fragment {
 		txtTabletIP = (EditText) rootView.findViewById(R.id.txtTabletIP);
 		txtPhoneIP = (EditText) rootView.findViewById(R.id.txtPhoneIP);
 		
-		try {
-			// To display IP Address
-			txtTabletIP.append(actualIpAddress); //modified 
-			btnStart.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-	
-				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					
-					if (btnStart.isChecked()) {
-						PHONE_IP = txtPhoneIP.getText().toString();
-
-						socket = null;
-						try {
-							socket = new DatagramSocket(MainActivity.IOIO_PORT);
-						} catch (SocketException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-						//this thread sends
-						ioio_thread = new ioio_thread_UDP(PHONE_IP, socket);
-						ioio_thread.start();
-						
-						//to be removed!
-	//					sensors_thread = new sensors_thread_UDP();
-	//					sensors_thread.start();
-	//					
-						//this thread receives
-						camera_thread = new camera_thread_UDP(socket);
-						//camera_thread.setPriority((Thread.MAX_PRIORITY + Thread.NORM_PRIORITY) / 2);
-						camera_thread.start();
-						
-						Toast.makeText(getActivity(), "Connection initiated", Toast.LENGTH_SHORT).show();
-						
-					} else {
-						ioio_thread.abort();
-						camera_thread.abort();
-						Toast.makeText(getActivity(), "Connection aborted", Toast.LENGTH_SHORT).show();
-					}
-				}
-			});
+		//restoring previously saves state:
+        if (savedInstanceState != null) {
+            // Restore last state for checked position.
+        	btnStart.setChecked(savedInstanceState.getBoolean("btnStartChecked"));
+        	txtTabletIP.setText(savedInstanceState.getString("txtTabletIP"));
+        	txtPhoneIP.setText(savedInstanceState.getString("txtPhoneIP"));
+        }
 		
-		} catch (Exception e) {
-			Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-		}
+        txtTabletIP.append(actualIpAddress); //modified 
         
         return rootView;
     }
@@ -114,5 +78,61 @@ public class ConnectionFragment extends Fragment {
 		//Convert to numbers
 		return Integer.parseInt(d,2)+"."+Integer.parseInt(c,2)+"."+Integer.parseInt(b,2)+"."+Integer.parseInt(a,2);
 		
+	}
+    
+    
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("btnStartChecked", btnStart.isChecked());
+        outState.putString("txtPhoneIP",txtPhoneIP.getText().toString());
+        outState.putString("txtTabletIP",txtTabletIP.getText().toString());
+    }
+    
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//    if (savedInstanceState != null) {
+//        // Restore last state for checked position.
+//    	btnStart.setChecked(savedInstanceState.getBoolean("btnStartChecked"));
+//    	txtTabletIP.setText(savedInstanceState.getString("txtTabletIP"));
+//    	txtPhoneIP.setText(savedInstanceState.getString("txtPhoneIP"));
+//        }
+//}
+    
+    public void onToggleClicked(View view) {
+	    // Is the toggle on?
+	    boolean on = ((ToggleButton) view).isChecked();
+	    
+	    if (on) {
+
+			PHONE_IP = txtPhoneIP.getText().toString();
+
+			socket = null;
+			try {
+				socket = new DatagramSocket(MainActivity.IOIO_PORT);
+			} catch (SocketException e) {
+				e.printStackTrace();
+			}
+			
+			//this thread sends
+			ioio_thread = new ioio_thread_UDP(PHONE_IP, socket);
+			ioio_thread.start();
+			
+			//to be removed!
+//			sensors_thread = new sensors_thread_UDP();
+//			sensors_thread.start();
+//			
+			//this thread receives
+			camera_thread = new camera_thread_UDP(socket);
+			//camera_thread.setPriority((Thread.MAX_PRIORITY + Thread.NORM_PRIORITY) / 2);
+			camera_thread.start();
+			
+			Toast.makeText(getActivity(), "Connection initiated", Toast.LENGTH_SHORT).show();
+	    } else {
+			ioio_thread.abort();
+			camera_thread.abort();
+			Toast.makeText(getActivity(), "Connection aborted", Toast.LENGTH_SHORT).show();
+	    }
 	}
 }

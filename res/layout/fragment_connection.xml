@@ -5,10 +5,7 @@
     android:orientation="vertical"
     android:padding="50dp" 
     android:layout_centerInParent="true" >
-    
-    
    
-
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -41,12 +38,10 @@
                 android:id="@+id/btnStart"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textOff="START"
-                android:textOn="START" >
+                android:textOff="START CONNECTION"
+                android:textOn="STOP CONNECTION" 
+                android:onClick="onToggleClicked">
             </ToggleButton>
 
         
-        
-        
-
 </LinearLayout>

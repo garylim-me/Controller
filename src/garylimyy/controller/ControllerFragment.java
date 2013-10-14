@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 
 /**
  * Fragment that appears in the "content_frame", shows the controller
@@ -31,6 +32,11 @@ public class ControllerFragment extends Fragment {
 	private static VerticalSeekBar leftSeekBar;
 	private static VerticalSeekBar rightSeekBar;
 	private static SeekBar armSeekBar;
+	private static TextView leftSeekBarValue;
+	private static TextView rightSeekBarValue;
+	private static TextView armSeekBarValue;
+	int CENTER_POSITION = 1450; //for neutral left/right position
+	int PROGRESS_BAR_MID = 450; //middle position of progress bar (0-900)
 	
 	//Threads:
 	camera_thread_UDP camera_thread;
@@ -57,10 +63,16 @@ public class ControllerFragment extends Fragment {
 		rightSeekBar = (VerticalSeekBar) rootView.findViewById (R.id.rightSeekBar);
 		imageView = (ImageView) rootView.findViewById (R.id.imageview);
 		
+		armSeekBarValue = (TextView) rootView.findViewById (R.id.armSeekBarValue);
+		leftSeekBarValue = (TextView) rootView.findViewById (R.id.leftSeekBarValue);
+		rightSeekBarValue = (TextView) rootView.findViewById (R.id.rightSeekBarValue);
+		
 		armSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				ioio_thread.armServo=progress+1000;
+				int BarValue = progress+1000;
+				armSeekBarValue.setText(Integer.toString(BarValue));
+				ioio_thread.armServo=BarValue;
 				ioio_thread.servoUpdate=true;
 			}
 	
@@ -70,6 +82,7 @@ public class ControllerFragment extends Fragment {
 	
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
+//				armSeekBar.setProgress(PROGRESS_BAR_MID); //temp
 			}
 		});
 		
@@ -78,11 +91,14 @@ public class ControllerFragment extends Fragment {
 			public boolean onTouch(View v, MotionEvent event) {
 
 				if (event.getAction() == MotionEvent.ACTION_UP) {
-	//				Toast.makeText(ControlActivity.this, "seekbar reset", Toast.LENGTH_SHORT).show();
-					ioio_thread.leftServo=(500+1000+SettingsFragment.tuneLeftValue);
+					int BarValue = (CENTER_POSITION+SettingsFragment.tuneLeftValue);
+					leftSeekBarValue.setText(Integer.toString(BarValue));
+					ioio_thread.leftServo=BarValue;
 					ioio_thread.servoUpdate=true;
 					ioio_thread.servoMove = false;
 					lastLeftUpTime = System.currentTimeMillis();
+					
+					leftSeekBar.setProgressAndThumb(PROGRESS_BAR_MID);
 				}
 				return false;
 			}
@@ -92,7 +108,9 @@ public class ControllerFragment extends Fragment {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if (System.currentTimeMillis() - lastLeftUpTime > 500) {
-					ioio_thread.leftServo=(int) (-(progress-500)*SettingsFragment.sensitivityValue/100+1500+SettingsFragment.tuneLeftValue);
+					int BarValue = (-(progress-PROGRESS_BAR_MID)*SettingsFragment.sensitivityValue/100+CENTER_POSITION+SettingsFragment.tuneLeftValue);
+					leftSeekBarValue.setText(Integer.toString(BarValue));
+					ioio_thread.leftServo=(int) BarValue;
 					ioio_thread.servoMove = true;
 					ioio_thread.servoUpdate=true;	
 				}
@@ -112,11 +130,14 @@ public class ControllerFragment extends Fragment {
 			public boolean onTouch(View v, MotionEvent event) {
 				
 				if (event.getAction() == MotionEvent.ACTION_UP) {
-	//				Toast.makeText(ControlActivity.this, "seekbar reset", Toast.LENGTH_SHORT).show();
-					ioio_thread.rightServo=500+600+SettingsFragment.tuneRightValue;
+					int BarValue = CENTER_POSITION+SettingsFragment.tuneRightValue;
+					rightSeekBarValue.setText(Integer.toString(BarValue));
+					ioio_thread.rightServo=BarValue;
 					ioio_thread.servoUpdate=true;
 					ioio_thread.servoMove = false;
 					lastRightUpTime = System.currentTimeMillis();
+					
+					rightSeekBar.setProgressAndThumb(PROGRESS_BAR_MID);
 				}
 				return false;
 			}
@@ -126,7 +147,9 @@ public class ControllerFragment extends Fragment {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if (System.currentTimeMillis() - lastRightUpTime > 500) {
-					ioio_thread.rightServo=(int) (-(progress-500)*SettingsFragment.sensitivityValue/100+500+600+SettingsFragment.tuneRightValue);
+					int BarValue = (-(progress-PROGRESS_BAR_MID)*(SettingsFragment.sensitivityValue/100)+CENTER_POSITION+SettingsFragment.tuneRightValue);
+					rightSeekBarValue.setText(Integer.toString(BarValue));
+					ioio_thread.rightServo=BarValue;
 					ioio_thread.servoMove = true;
 					ioio_thread.servoUpdate=true;	
 				}

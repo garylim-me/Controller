@@ -5,56 +5,97 @@
 	
 	<RelativeLayout
 	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content" 
-	    android:layout_weight="1" >
+	    android:layout_height="0px" 
+	    android:layout_weight="6" >
 	
-	    
-	    <garylimyy.controller.VerticalSeekBar
-	        android:id="@+id/leftSeekBar"
-	        android:layout_width="wrap_content"
-	        android:layout_height="200dp"
-	        android:layout_centerVertical="true"
+	    <LinearLayout
+		    android:orientation="vertical"
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent" 
+			android:layout_centerVertical="true"
 			android:layout_alignParentLeft="true"
-	        android:max="1000"
-	        android:progress="500" />
-	    
+		    android:padding="10dp" >
+    
+		    <TextView
+		        android:layout_weight="1"
+		        android:gravity="center_horizontal"
+	            android:id="@+id/leftSeekBarValue"
+	            android:layout_width="fill_parent"
+	            android:layout_height="0px"
+	            android:text="1450" >
+	        </TextView>
+	            
+		    <garylimyy.controller.VerticalSeekBar
+		        android:layout_weight="10"
+		        android:gravity="center_horizontal"
+		        android:id="@+id/leftSeekBar"
+		        android:layout_width="fill_parent"
+		        android:layout_height="0px"
+		        android:max="900"
+		        android:progress="450" />
+	    </LinearLayout>
 	    
 	    <ImageView
 	        android:id="@+id/imageview"
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
-	        
 	        android:layout_centerInParent="true"
 	        android:gravity="center_horizontal" />
 	    
-	    
-	    <garylimyy.controller.VerticalSeekBar
-	        android:id="@+id/rightSeekBar"
-	        android:layout_width="wrap_content"
-	        android:layout_height="200dp"
-	        android:layout_centerVertical="true"
+	    <LinearLayout
+		    android:orientation="vertical"
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent" 
+			android:layout_centerVertical="true"
 	        android:layout_alignParentRight="true"
-	        android:max="1000"
-	        android:progress="500" />
+		    android:padding="10dp" >
+    
+		    <TextView
+		        android:layout_weight="1"
+		        android:gravity="center_horizontal"
+	            android:id="@+id/rightSeekBarValue"
+	            android:layout_width="fill_parent"
+	            android:layout_height="0px"
+	            android:text="1450" >
+	        </TextView>
+	            
+		    <garylimyy.controller.VerticalSeekBar
+		        android:layout_weight="10"
+		        android:gravity="center_horizontal"
+		        android:id="@+id/rightSeekBar"
+		        android:layout_width="fill_parent"
+		        android:layout_height="0px"
+		        android:max="900"
+		        android:progress="450" />
+	    </LinearLayout>
 	    
 	</RelativeLayout>    
 	
-	<RelativeLayout
+	<LinearLayout
+	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content" 
-	    android:layout_weight="5" >
-	
-	
-	    <SeekBar
-	        android:id="@+id/armSeekBar"
-	        android:layout_width="200dp"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:layout_alignParentBottom="true"
-	        android:max="1000"
-	        android:progress="500" />
-	
-	
-	</RelativeLayout>
+	    android:layout_height="0px" 
+	    android:layout_weight="1" 
+	    android:gravity="center" >
+    
+		    <TextView
+		        android:gravity="right"
+		        android:layout_weight="1"
+	            android:id="@+id/armSeekBarValue"
+	            android:layout_width="0px"
+	            android:layout_height="fill_parent"
+	            android:text="1500" />
+	            
+		    <SeekBar
+		        android:gravity="center"
+		        android:layout_weight="10"
+		        android:id="@+id/armSeekBar"
+		        android:layout_width="0px"
+		        android:layout_height="wrap_content"
+		        android:max="1000"
+		        android:progress="500" />
+		    
+	    
+	</LinearLayout>
 	
 </LinearLayout>
